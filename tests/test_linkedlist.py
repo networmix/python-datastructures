@@ -47,3 +47,22 @@ def test_linkedlist_str():
     for elt in test_dataset:
         ll.append(elt)
     assert str(ll) == "['10', '11', 'a', 'b', 'None']"
+
+
+def test_linkedlist_next():
+    test_dataset = [10, 11, 'a', 'b', None]
+    ll = linkedlist.SinglyLinkedList()
+    for elt in test_dataset:
+        ll.append(elt)
+    for elt in test_dataset:
+        next(ll) == elt
+    with pytest.raises(StopIteration):
+        next(ll)
+
+
+def test_linkedlist_reverse():
+    test_dataset = [10, 11, 'a', 'b', None]
+    ll = linkedlist.SinglyLinkedList()
+    for elt in test_dataset:
+        ll.append(elt)
+    assert str(ll.reverse()) == "['None', 'b', 'a', '11', '10']"

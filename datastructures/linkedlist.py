@@ -50,8 +50,6 @@ class SinglyLinkedList(object):
             yield tmp_next_elt
 
     def __next__(self):
-        if self._next is None:
-            self._next = self._head
         while self._next:
             tmp_next_elt = self._next
             self._next = self._next.get_next()
@@ -66,6 +64,7 @@ class SinglyLinkedList(object):
         if not self._head:
             self._head = node
             self._tail = node
+            self._next = node
             self._len += 1
         else:
             self._tail.set_next(node)
@@ -77,7 +76,7 @@ class SinglyLinkedList(object):
             raise IndexError
         prev = None
         cur = self._head
-        for node in iter(self):
+        for node in self:
             prev = cur
             cur = node
         prev.set_next(None)
@@ -91,3 +90,18 @@ class SinglyLinkedList(object):
 
     def append(self, value):
         self._append(SinglyLinkedListNode(value))
+
+    def reverse(self):
+        if self._len == 0:
+            return self
+        prev = None
+        cur = self._head
+        nxt = self._head.get_next()
+        self._head, self._tail = self._tail, self._head
+        while cur:
+            cur.set_next(prev)
+            prev = cur
+            cur = nxt
+            if nxt:
+                nxt = nxt.get_next()
+        return self
